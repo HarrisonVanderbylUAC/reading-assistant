@@ -1,0 +1,31 @@
+javascript: (() => {
+  const map = require("./output.json");
+  const makeBionic = (words) =>
+    words.split(" ").map((word) => {
+      const sensitifity = 10;
+      const traverse = (map, word, length) => {
+        if (!word[0]) return ["", word];
+        if (!map[length]) return ["", word];
+        if (!map[length][word[0].toLowerCase()]) return ["", word];
+
+        if (Object.keys(map[length]).length < sensitifity) return ["", word];
+        //console.log(Object.keys(map[length]).length, ":", word[0]);
+        const trav = traverse(
+          map[length][word[0].toLowerCase()],
+          word.slice(1),
+          length
+        );
+        return [word[0] + trav[0], trav[1]];
+      };
+      const check = word;
+
+      const bolded = traverse(map, check, check.length);
+
+      return "<strong>" + bolded[0] + "</strong>" + bolded[1];
+    });
+
+  Object.values($("p")).map((a) => {
+    a.innerHTML = makeBionic(a.innerHTML);
+    return true;
+  });
+})();
