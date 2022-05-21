@@ -1,5 +1,7 @@
 javascript: (() => {
-  const map = require("./output.json");
+var data = await fetch("https://raw.githubusercontent.com/HarrisonVanderbylUAC/reading-assistant/main/output.json");
+
+  const map = await data.json();
   const makeBionic = (words) =>
     words.split(" ").map((word) => {
       const sensitifity = 10;
